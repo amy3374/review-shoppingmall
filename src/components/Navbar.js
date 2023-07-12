@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ authenticate, setAuthenticate }) => {
   const menuList = [
     "여성",
     "Divided",
@@ -21,14 +21,32 @@ const Navbar = () => {
   const goToLogin = () => {
     navigate("/login");
   };
+  const logout = () => {
+    setAuthenticate(false);
+  };
+  const search = (e) => {
+    if (e.key === "Enter") {
+      let keyword = e.target.value;
+      navigate(`/?q=${keyword}`);
+    }
+  };
   return (
     <div>
-      <div className="login-bar">
-        <div className="login-area" onClick={goToLogin}>
-          <FontAwesomeIcon icon={faUser} />
-          <div>로그인</div>
+      {authenticate == true ? (
+        <div className="login-bar">
+          <div className="login-area" onClick={logout}>
+            <FontAwesomeIcon icon={faUser} />
+            <div>로그아웃</div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="login-bar">
+          <div className="login-area" onClick={goToLogin}>
+            <div>로그인</div>
+          </div>
+        </div>
+      )}
+
       <div className="logo-bar">
         <img
           onClick={goToHome}
@@ -43,8 +61,12 @@ const Navbar = () => {
           ))}
         </ul>
         <div className="search-area">
-          <FontAwesomeIcon icon={faSearch} />
-          <input type="text" />
+          <FontAwesomeIcon icon={faSearch} onClick={search} />
+          <input
+            type="text"
+            onKeyDown={(e) => search(e)}
+            onFocus={(this.value = "")}
+          />
         </div>
       </div>
     </div>

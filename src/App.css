@@ -18,6 +18,7 @@
 .menu-bar {
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
 }
 .menu-area {
   display: flex;
@@ -35,6 +36,9 @@
   position: absolute;
   right: 0;
 }
+.fa-magnifying-glass{
+  cursor: pointer;
+}
 .search-area input{
   margin-left: 5px;
   border:none;
@@ -50,4 +54,21 @@
   transform: scale(1.1,1.1);
   transition: all 0.2s ease-in-out;
 
+}
+.detail-row {
+  display: flex;
+  justify-content: center;
+}
+.detail-img{
+  display: flex;
+  justify-content: flex-end;
+}
+.detail-info div {
+  padding-bottom: 20px;
+
+}
+.detail-btn {
+  width: 90%;
+  background-color: black;
+  color: white;
 }

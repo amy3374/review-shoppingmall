@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { productAction } from "../redux/actions/productAction";
 
 const ProductAll = () => {
-  const [productList, setProductList] = useState([]);
+  const productList = useSelector((state) => state.product.productList);
   const [query, setQuery] = useSearchParams();
-  const getProducts = async () => {
+  const dispatch = useDispatch();
+  const getProducts = () => {
     let searchQuery = query.get("q") || "";
     console.log("쿼리값은?", searchQuery);
-    let url = `http://localhost:5000/products?q=${searchQuery}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    setProductList(data);
+    dispatch(productAction.getProducts(searchQuery));
   };
   useEffect(() => {
     getProducts();

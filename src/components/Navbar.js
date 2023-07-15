@@ -62,11 +62,7 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
         </ul>
         <div className="search-area">
           <FontAwesomeIcon icon={faSearch} onClick={search} />
-          <input
-            type="text"
-            onKeyDown={(e) => search(e)}
-            onFocus={(this.value = "")}
-          />
+          <input type="text" onKeyDown={(e) => search(e)} />
         </div>
       </div>
     </div>

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const Navbar = ({ authenticate, setAuthenticate }) => {
+const Navbar = () => {
+  const authenticate = useSelector((state) => state.login.authenticate);
+  const dispatch = useDispatch();
   const menuList = [
     "여성",
     "Divided",
@@ -20,10 +23,11 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
   };
   const goToLogin = () => {
     navigate("/login");
+    dispatch({ type: "LOGOUT_SUCCESS", payload: {} });
   };
-  const logout = () => {
-    setAuthenticate(false);
-  };
+  // const logout = () => {
+  //   setAuthenticate(false);
+  // };
   const search = (e) => {
     if (e.key === "Enter") {
       let keyword = e.target.value;
@@ -32,21 +36,12 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
   };
   return (
     <div>
-      {authenticate == true ? (
-        <div className="login-bar">
-          <div className="login-area" onClick={logout}>
-            <FontAwesomeIcon icon={faUser} />
-            <div>로그아웃</div>
-          </div>
+      <div className="login-bar">
+        <div className="login-area" onClick={goToLogin}>
+          <FontAwesomeIcon icon={faUser} />
+          <div>{authenticate === true ? "로그아웃" : "로그인"}</div>
         </div>
-      ) : (
-        <div className="login-bar">
-          <div className="login-area" onClick={goToLogin}>
-            <div>로그인</div>
-          </div>
-        </div>
-      )}
-
+      </div>
       <div className="logo-bar">
         <img
           onClick={goToHome}

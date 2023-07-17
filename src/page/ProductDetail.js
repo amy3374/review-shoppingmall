@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { productAction } from "../redux/actions/productAction";
 
 const ProductDetail = () => {
-  const [product, setProduct] = useState(null);
+  const selectedItem = useSelector((state) => state.product.selectedItem);
+  const dispatch = useDispatch();
   const { id } = useParams();
   console.log("id", id);
   const getProductDetail = async () => {
-    let url = `http://localhost:5000/products/${id}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    setProduct(data);
+    dispatch(productAction.getProductDetail(id));
   };
   useEffect(() => {
     getProductDetail();
@@ -21,12 +21,12 @@ const ProductDetail = () => {
     <Container>
       <Row className="detail-row">
         <Col lg={5} className="detail-img">
-          <img width={300} src={product?.img} />
+          <img width={300} src={selectedItem?.img} />
         </Col>
         <Col lg={6} className="detail-info">
-          <h4>{product?.title}</h4>
-          <h4>{product?.price}원</h4>
-          <div>{product?.choice == true ? "Conscious choice" : ""}</div>
+          <h4>{selectedItem?.title}</h4>
+          <h4>{selectedItem?.price}원</h4>
+          <div>{selectedItem?.choice == true ? "Conscious choice" : ""}</div>
           <Dropdown>
             <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
               사이즈 선택

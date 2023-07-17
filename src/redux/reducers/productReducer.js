@@ -1,5 +1,6 @@
 let initialState = {
   productList: [],
+  selectedItem: null,
 };
 function productReducer(state = initialState, action) {
   let { type, payload } = action;
@@ -8,6 +9,11 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         productList: payload.data,
+      };
+    case "GET_DETAIL_SUCCESS":
+      return {
+        ...state,
+        selectedItem: payload.data,
       };
     default:
       return {
